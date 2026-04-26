@@ -4,29 +4,43 @@ import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/Card"
 import { Input } from "./ui/Input"
 import { Textarea } from "./ui/TextArea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/Select"
 import { Calendar, Mail, Phone, MapPin } from "lucide-react"
-import { Label } from "./ui/Label"
 
 export function Booking() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    phone: "",
-    service: "",
     message: "",
   })
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle")
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle form submission
+
     console.log("Form submitted:", formData)
-    alert("Thank you for your inquiry! I will get back to you within 24 hours.")
-    setFormData({ name: "", email: "", phone: "", service: "", message: "" })
+
+    setStatus("loading")
+
+    const res = await fetch("/api/contact", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(formData)
+    })
+
+    console.log(res)
+
+    if (res.ok) {
+      setStatus("success")
+      setFormData({name: "", email: "", message: ""})
+    } else {
+      console.log("Got here!")
+      setStatus("error")
+    }
+
   }
 
   return (
-    <section id="booking" className="py-20 lg:py-32">
+    <section id="contact" className="py-20 lg:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           <div className="space-y-8">
@@ -125,36 +139,6 @@ export function Booking() {
                     />
                   </div>
                   </div>
-                  <div className="space-y-2">
-                    <div>Phone<div/>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="(555) 000-0000"
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    />
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="service">Interested In</Label>
-                  <Select
-                    value={formData.service}
-                    onValueChange={(value) => setFormData({ ...formData, service: value })}
-                  >
-                    <SelectTrigger id="service">
-                      <SelectValue placeholder="Select a service" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="personal-training">Personal Training</SelectItem>
-                      <SelectItem value="group-training">Group Training</SelectItem>
-                      <SelectItem value="online-coaching">Online Coaching</SelectItem>
-                      <SelectItem value="nutrition-coaching">Nutrition Coaching</SelectItem>
-                      <SelectItem value="transformation-package">Transformation Package</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
 
                 <div className="space-y-2">
                   <div >Tell me about your goals</div>
@@ -167,10 +151,14 @@ export function Booking() {
                   />
                 </div>
 
-                <button type="submit" className="w-full border rounded-xl p-4">
-                  Book Free Consultation
+                <button type="submit" 
+                disabled={status === "loading"}
+                className="w-full border rounded-xl p-4">
+                  {status === "loading" ? "Sending..." : "Send"}
                 </button>
               </form>
+              {status === "success" && <p style={{ color: "green" }}>Message sent successfully!</p>}
+              {status === "error" && <p style={{ color: "red" }}>Something went wrong. Please try again.</p>}
             </CardContent>
           </Card>
         </div>

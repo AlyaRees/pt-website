@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend"
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
   
@@ -14,21 +16,11 @@ export async function POST(req: Request) {
     );
   }
 
-  // 3. Set up the Gmail transporter
-  const transporter = nodemailer.createTransport({
-    service: "gmail",
-    auth: {
-      user: process.env.GMAIL_USER,         // your gmail address
-      pass: process.env.GMAIL_APP_PASSWORD, // your app password
-    },
-  });
-
-  // 4. Send the email
   try {
-    await transporter.sendMail({
-      from: `"${name}" <${process.env.GMAIL_USER}>`,
-      to: process.env.RECIPIENT_EMAIL,      // where you want to receive it
-      replyTo: email,                       // so you can reply directly to the user
+    await resend.emails.send({
+      from: "Contact Form <onboarding@resend.dev>", 
+      to: process.env.RECIPIENT_EMAIL!,
+      replyTo: email,
       subject: `New message from ${name}`,
       html: `
         <h2>New Contact Form Submission</h2>
@@ -40,12 +32,11 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ success: true }, { status: 200 });
-
-  } catch (error) {
-    console.error("Email error:", error);
-    return NextResponse.json(
-      { error: "Failed to send email." },
-      { status: 500 }
-    );
+    } catch (error) {
+      console.error("Email error:", error)
+      return NextResponse.json(
+        {error: "Failed to send email."},
+        {status: 500}
+      )
+    }
   }
-}
