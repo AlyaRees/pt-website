@@ -15,14 +15,18 @@ export async function POST(req: Request) {
       { status: 400 }
     );
   }
+
+  // strips all html
+  const safeName = sanitizeHtml(name, { allowedTags: []})
+
     await resend.emails.send({
-      from: name + " <onboarding@resend.dev>", 
+      from: safeName + " <onboarding@resend.dev>", 
       to: process.env.RECIPIENT_EMAIL!,
       replyTo: email,
-      subject: `New message from ${name}`,
+      subject: `New message from ${safeName}`,
       html: `
         <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Name:</strong> ${safeName}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Message:</strong></p>
         <p>${message.replace(/\n/g, "<br>")}</p>
