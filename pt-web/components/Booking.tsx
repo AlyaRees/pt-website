@@ -119,6 +119,7 @@ export function Booking() {
                   <div>Full Name</div>
                   <Input
                     id="name"
+                    type="text"
                     placeholder="Your name"
                     maxLength={100}
                     value={formData.name}
@@ -133,7 +134,7 @@ export function Booking() {
                     <Input
                       id="email"
                       type="email"
-                    maxLength={100}
+                    maxLength={254}
                       placeholder="you@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
