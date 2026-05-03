@@ -120,6 +120,7 @@ export function Booking() {
                   <Input
                     id="name"
                     placeholder="Your name"
+                    maxLength={100}
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     required
@@ -132,6 +133,7 @@ export function Booking() {
                     <Input
                       id="email"
                       type="email"
+                    maxLength={100}
                       placeholder="you@example.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -147,6 +149,7 @@ export function Booking() {
                     placeholder="What are you hoping to achieve?"
                     rows={4}
                     value={formData.message}
+                    maxLength={2000}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                   />
                 </div>
