@@ -17,27 +17,27 @@ export function Booking() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    console.log("Form submitted:", formData)
-
     setStatus("loading")
 
+    try {
     const res = await fetch("/api/contact", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(formData)
     })
 
-    console.log(res)
-
     if (res.ok) {
       setStatus("success")
       setFormData({name: "", email: "", message: ""})
     } else {
-      console.log("Got here!")
       setStatus("error")
     }
 
+  } catch (error) {
+    console.error("Could not send data. Error: " + error)
+    setStatus("error")
   }
+}
 
   return (
     <section id="contact" className="py-20 lg:py-32">

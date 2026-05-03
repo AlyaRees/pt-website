@@ -24,7 +24,22 @@ describe("Testing the POST api", () => {
             message: "hi there."
         }))
 
+        const resolvedResponse = await response.json()
+        
         expect(response.status).toBe(200)
-        expect(await response.json()).toEqual({success: true})
+        expect(resolvedResponse.message).toBe("Email sent successfully.")
+    })
+
+    it("should return 400 when submitting an empty feild", async () => {
+        const response = await POST(request({
+            name: "",
+            email: "testuser1@test.com",
+            message: "hello"
+        }))
+
+        const resolvedResponse = await response.json()
+
+        expect(response.status).toBe(400)
+        expect(resolvedResponse.message).toBe("All fields are required.")
     })
 })

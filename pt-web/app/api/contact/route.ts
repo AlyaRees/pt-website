@@ -5,20 +5,17 @@ const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
   
-  // 1. Parse the request body
-  const { name, email, message } = await req.json();
+  try {
+  const { name, email, message } = await req.json()
 
-  // 2. Validate inputs
   if (!name || !email || !message) {
     return NextResponse.json(
-      { error: "All fields are required." },
+      { message: "All fields are required." },
       { status: 400 }
     );
   }
-
-  try {
     await resend.emails.send({
-      from: "Contact Form <onboarding@resend.dev>", 
+      from: name + " <onboarding@resend.dev>", 
       to: process.env.RECIPIENT_EMAIL!,
       replyTo: email,
       subject: `New message from ${name}`,
@@ -31,11 +28,14 @@ export async function POST(req: Request) {
       `,
     });
 
-    return NextResponse.json({ success: true }, { status: 200 });
+    return NextResponse.json(
+      { message: "Email sent successfully." }, 
+      { status: 200 }
+    )
     } catch (error) {
       console.error("Email error:", error)
       return NextResponse.json(
-        {error: "Failed to send email."},
+        {message: "Failed to send email."},
         {status: 500}
       )
     }
