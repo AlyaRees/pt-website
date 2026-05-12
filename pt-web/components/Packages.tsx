@@ -1,6 +1,7 @@
 import { ArrowRight, Flame, Trophy, Rocket } from "lucide-react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/Card"
 import Link from "next/link"
+import { Button } from "./ui/Button"
 
 const packages = [
   {
@@ -100,12 +101,12 @@ export function Packages() {
                 </ul>
               </CardContent>
               <CardFooter>
-                <button className="w-full group">
+                <Button asChild className="w-full group">
                   <Link href="#booking">
                     Purchase Package
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
-                </button>
+                </Button>
               </CardFooter>
             </Card>
           ))}
