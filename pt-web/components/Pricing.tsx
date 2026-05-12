@@ -1,5 +1,6 @@
 import { Check } from "lucide-react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/Card"
+import { Button } from "./ui/Button"
 import Link from "next/link"
 
 const pricingTiers = [

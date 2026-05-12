@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowRight, Calendar } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/Card"
+import { Button } from "./ui/Button"
 
 const blogPosts = [
   {
@@ -46,12 +47,12 @@ export function Blog() {
               Fitness Tips & Insights
             </h2>
           </div>
-          <button className="w-fit">
+          <Button asChild variant="outline" className="w-fit">
             <Link href="#">
               View All Posts
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
-          </button>
+          </Button>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">

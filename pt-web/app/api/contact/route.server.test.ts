@@ -36,6 +36,7 @@ describe("Testing the POST api", () => {
       request({
         name: "TestUser",
         email: "testuser@test.com",
+        phone: "09876543235",
         message: "hi there.",
       }),
     );
@@ -126,7 +127,8 @@ describe("Testing the POST api", () => {
         request({
           name: "<script>alert('xss')</script>Jane",
           email: "jane@example.com",
-          message: "Hello",
+          phone: "09876543234",
+          message: "Hello"
         }),
       );
       expect(res.status).toBe(200);
