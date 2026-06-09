@@ -108,14 +108,16 @@ describe("Testing the POST api", () => {
   });
 
   it("should gracefully return 500 when the body is completely empty", async () => {
-    const req = new Request(api, {
-      method: "POST",
-    });
 
-    const res = await POST(req);
-    const resolvedResponse = await res.json();
+    const request = new Request(api, {
+      method: "POST"
+    })
 
-    expect(res.status).toBe(500);
+    const response = await POST(request)
+
+    const resolvedResponse = await response.json()
+
+    expect(response.status).toBe(500);
     expect(resolvedResponse.message).toBe("Failed to send email.");
     expect(resolvedResponse.message).not.toContain("Cannot read properties");
     expect(resolvedResponse.message).not.toContain("undefined");
@@ -134,11 +136,16 @@ describe("Testing the POST api", () => {
       expect(res.status).toBe(200);
       // Confirm the script tag was stripped — resend mock should have been called with clean data
       const callArg = getMockSend().mock.calls[0][0]
-      console.log(callArg)
       expect(callArg.html).not.toContain("<script>")
       expect(callArg.from).not.toContain("<script>")
       expect(callArg.subject).not.toContain("<script>")
     })
-    // add test for email field sanitisation here ->
+
+    it("should strip all scripts tags from the input for the email", async () => {
+
+      const response = await POST(request({
+        // Finish writing this test for the email input field to check malicious content is blocked by sanitisation!
+      }))
+    })
   })
 })
