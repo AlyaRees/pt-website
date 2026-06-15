@@ -1,4 +1,5 @@
 import { POST } from "./route";
+import { sanitisedEmail } from "./sanitised";
 
 // Resend mocked -> (so no real emails are sent)
 
@@ -15,7 +16,7 @@ jest.mock("resend", () => {
 const getMockSend = () => {
   const { Resend } = require("resend");
   return new Resend().emails.send;
-};
+}
 
 const api = "http://localhost:3000/api/contact";
 
@@ -25,7 +26,7 @@ const request = (body: object) =>
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(body),
-  });
+  })
 
 describe("Testing the POST api", () => {
   beforeEach(() => {
@@ -131,7 +132,7 @@ describe("Testing the POST api", () => {
           email: "jane@example.com",
           phone: "09876543234",
           message: "Hello"
-        }),
+        })
       );
       expect(res.status).toBe(200);
       // Confirm the script tag was stripped — resend mock should have been called with clean data
@@ -141,11 +142,20 @@ describe("Testing the POST api", () => {
       expect(callArg.subject).not.toContain("<script>")
     })
 
-    it("should strip all scripts tags from the input for the email", async () => {
+    it("should strip newline characters from the email field to prevent header injection", async () => {
 
-      const response = await POST(request({
-        // Finish writing this test for the email input field to check malicious content is blocked by sanitisation!
+      const response = await POST(
+        request({
+        name: "Charlie",
+        email: "John\nCC: victim@example.com",
+        phone: "09876543234",
+        message: "Hello"
       }))
+
+      expect(response.status).toBe(200)
+
+      const callArg = getMockSend().mock.calls[0][0]
+      expect(callArg.replyTo).not.toMatch(/\r|\n/)
     })
   })
 })
