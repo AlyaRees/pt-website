@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend"
 import sanitizeHtml from "sanitize-html"
-import { sanitisedEmail } from "./sanitised";
+import { sanitise as sanitise } from "./sanitised";
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
   // strips all html
   const safeName = sanitizeHtml(name)
-  const safeEmail = sanitisedEmail(email)
+  const safeEmail = sanitise(email)
   const safeMessage = sanitizeHtml(message)
 
     await resend.emails.send({
@@ -32,7 +32,7 @@ export async function POST(req: Request) {
         <p><strong>Name:</strong> ${safeName}</p>
         <p><strong>Email:</strong> ${safeEmail}</p>
         <p><strong>Message:</strong></p>
-        <p>${safeMessage.replace(/\n/g, "<br>")}</p>
+        <p>${safeMessage}</p>
       `,
     });
 

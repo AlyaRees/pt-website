@@ -1,5 +1,5 @@
 import { POST } from "./route";
-import { sanitisedEmail } from "./sanitised";
+import { sanitise } from "./sanitised";
 
 // Resend mocked -> (so no real emails are sent)
 
@@ -137,6 +137,7 @@ describe("Testing the POST api", () => {
       expect(res.status).toBe(200);
       // Confirm the script tag was stripped — resend mock should have been called with clean data
       const callArg = getMockSend().mock.calls[0][0]
+      console.log(callArg)
       expect(callArg.html).not.toContain("<script>")
       expect(callArg.from).not.toContain("<script>")
       expect(callArg.subject).not.toContain("<script>")
@@ -156,6 +157,23 @@ describe("Testing the POST api", () => {
 
       const callArg = getMockSend().mock.calls[0][0]
       expect(callArg.replyTo).not.toMatch(/\r|\n/)
+    })
+    it("should strip all script tags and malicious characters from the message input field", async () => {
+      const response = await POST(
+        request({
+          name: "Fiona",
+          email: "gremlin@cave.com",
+          phone: "07541236987",
+          message: "<script>alert('xss')</script>\n\rHello"
+        })
+      )
+
+      expect(response.status).toBe(200)
+
+      const callArg = getMockSend().mock.calls[0][0]
+      console.log(callArg.message )
+      expect(callArg.message)
+
     })
   })
 })
