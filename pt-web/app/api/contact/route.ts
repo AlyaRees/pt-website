@@ -18,8 +18,8 @@ export async function POST(req: Request) {
   }
 
   // strips all html
-  const safeName = sanitizeHtml(name)
-  const safeEmail = sanitise(email)
+  const safeName = sanitizeHtml(sanitise(name))
+  const safeEmail = sanitizeHtml(sanitise(email))
   const safeMessage = sanitizeHtml(message)
 
     await resend.emails.send({
