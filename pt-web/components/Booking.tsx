@@ -27,7 +27,7 @@ export function Booking() {
     "idle" | "loading" | "success" | "error"
   >("idle");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
 
     setStatus("loading");
@@ -184,17 +184,17 @@ export function Booking() {
                   <Label htmlFor="service">Interested In</Label>
                   <Select
                     value={formData.service}
-                    onValueChange={(value) => setFormData({ ...formData, service: value })}
+                    onValueChange={(value) => {setFormData({ ...formData, service: value})}}
                   >
                     <SelectTrigger id="service">
                       <SelectValue placeholder="Select a service" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="personal-training">Personal Training</SelectItem>
-                      <SelectItem value="group-training">Group Training</SelectItem>
-                      <SelectItem value="online-coaching">Online Coaching</SelectItem>
-                      <SelectItem value="nutrition-coaching">Nutrition Coaching</SelectItem>
-                      <SelectItem value="transformation-package">Transformation Package</SelectItem>
+                      <SelectItem value="Personal Training">Personal Training</SelectItem>
+                      <SelectItem value="Group Training">Group Training</SelectItem>
+                      <SelectItem value="Online Coaching">Online Coaching</SelectItem>
+                      <SelectItem value="Nutrition Coaching">Nutrition Coaching</SelectItem>
+                      <SelectItem value="Transformation Package">Transformation Package</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
@@ -235,5 +235,5 @@ export function Booking() {
         </div>
       </div>
     </section>
-  );
+  )
 }

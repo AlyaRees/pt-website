@@ -1,5 +1,5 @@
-import { POST } from "./route";
-import { sanitise } from "./sanitised";
+import { serialize } from "v8";
+import { POST } from "./route"
 
 // Resend mocked -> (so no real emails are sent)
 
@@ -39,6 +39,7 @@ describe("Testing the POST api", () => {
         email: "testuser@test.com",
         phone: "09876543235",
         message: "hi there.",
+        service: "-"
       }),
     );
 
@@ -54,6 +55,7 @@ describe("Testing the POST api", () => {
         name: "",
         email: "testuser1@test.com",
         message: "hello",
+        service: "-"
       }),
     );
 
@@ -69,6 +71,7 @@ describe("Testing the POST api", () => {
         name: "rob roberts",
         email: "",
         message: "hello there.",
+        service: "-"
       }),
     );
 
@@ -84,6 +87,7 @@ describe("Testing the POST api", () => {
         name: "julia",
         email: "testuser123@test.com",
         message: "",
+        service: "-"
       }),
     );
 
@@ -99,6 +103,7 @@ describe("Testing the POST api", () => {
         name: "",
         email: "",
         message: "",
+        service: "-"
       }),
     );
 
@@ -131,7 +136,8 @@ describe("Testing the POST api", () => {
           name: "<script>alert('xss')</script>Jane",
           email: "jane@example.com",
           phone: "09876543234",
-          message: "Hello"
+          message: "Hello",
+          service: "-"
         })
       );
       expect(res.status).toBe(200);
@@ -148,7 +154,8 @@ describe("Testing the POST api", () => {
         name: "Charlie\r\nBCC: spam@evil.com",
         email: "cupcakes@gmail.com",
         phone: "07987123765",
-        message: "hi"
+        message: "hi",
+        service: "-"
       }))
 
       expect(response.status).toBe(200);
@@ -166,7 +173,8 @@ describe("Testing the POST api", () => {
         name: "Charlie",
         email: "John\nCC: victim@example.com",
         phone: "09876543234",
-        message: "Hello"
+        message: "Hello",
+        service: "-"
       }))
 
       expect(response.status).toBe(200)
@@ -191,7 +199,8 @@ it(`should strip script tag characters from the email (${maliciousEmail}) field 
         name: "Charlie",
         email: maliciousEmail,
         phone: "09876543234",
-        message: "Hello"
+        message: "Hello",
+        service: "-"
       }))
 
       expect(response.status).toBe(200)
@@ -212,7 +221,8 @@ it(`should strip script tag characters from the email (${maliciousEmail}) field 
           name: "Fiona",
           email: "gremlin@cave.com",
           phone: "07541236987",
-          message: "<script>alert('xss')</script>Hello"
+          message: "<script>alert('xss')</script>Hello",
+          service: "-"
         })
       )
 

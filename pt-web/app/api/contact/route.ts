@@ -1,16 +1,16 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from "next/server"
 import { Resend } from "resend"
 import sanitizeHtml from "sanitize-html"
-import { sanitise as sanitise } from "./sanitised";
+import { sanitise as sanitise } from "./sanitised"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
 export async function POST(req: Request) {
   
   try {
-  const { name, email, phone, message } = await req.json()
+  const { name, email, phone, message, service } = await req.json()
 
-  if (!name || !email || !message || !phone) {
+  if (!name || !email || !message || !phone || !service) {
     return NextResponse.json(
       { message: "All fields are required." },
       { status: 400 }
@@ -21,6 +21,7 @@ export async function POST(req: Request) {
   const safeName = sanitizeHtml(sanitise(name))
   const safeEmail = sanitizeHtml(sanitise(email))
   const safeMessage = sanitizeHtml(message)
+  const safeService = sanitizeHtml(service)
 
     await resend.emails.send({
       from: safeName + " <onboarding@resend.dev>", 
@@ -29,6 +30,7 @@ export async function POST(req: Request) {
       subject: `New message from ${safeName}`,
       html: `
         <h2>New Contact Form Submission</h2>
+        <p><strong>Interested in:</strong> ${safeService}</p>
         <p><strong>Name:</strong> ${safeName}</p>
         <p><strong>Email:</strong> ${safeEmail}</p>
         <p><strong>Message:</strong></p>
