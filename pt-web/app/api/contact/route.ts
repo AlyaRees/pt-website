@@ -1,12 +1,23 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
+import { ratelimit } from "../../../lib/ratelimit"
 import { Resend } from "resend"
 import sanitizeHtml from "sanitize-html"
 import { sanitise as sanitise } from "./sanitised"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
-export async function POST(req: Request) {
-  
+export async function POST(req: NextRequest) {
+  const ip = req.headers.get("x-forwarded-for") ?? "anonymous"
+
+  const { success, limit, remaining } = await ratelimit.limit(ip)
+
+  if (!success) {
+    return NextResponse.json(
+      { error: "Too many requests. Please try again later."},
+      {status: 429}
+    )
+  }
+
   try {
   const { name, email, phone, message, service } = await req.json()
 
