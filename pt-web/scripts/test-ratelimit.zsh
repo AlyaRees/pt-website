@@ -1,6 +1,13 @@
 for i in $(seq 1 15); do
-  curl -s -o /dev/null -w "Request $i: %{http_code}\n" \
-  -X POST http://localhost:3000/api/contact
+  curl -w "Request $i: %{http_code}\n" \
+  -X POST http://localhost:3000/api/contact \
+  -H "Content-Type: application/json" \
+  -H "x-test-mode: true" \
+  -d '{"name": "Test User", 
+  "email": "test@test.com", 
+  "phone": "07898654323",
+  "message": "Test message",
+  "service": "Gym Training"}'
 done
 
 # seq is a terminal command that generates a sequence of numbers

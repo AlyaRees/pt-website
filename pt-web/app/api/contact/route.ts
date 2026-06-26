@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server"
 import { ratelimit } from "../../../lib/ratelimit"
 import { Resend } from "resend"
 import sanitizeHtml from "sanitize-html"
-import { sanitise as sanitise } from "./sanitised"
+import { isValidEmail, sanitise as sanitise } from "./securityFunctions"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -28,12 +28,22 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  if (!isValidEmail(email)) {
+    return NextResponse.json(
+      { error: "Invalid email address."},
+      { status: 400 }
+    )
+  }
   // strips all html
   const safeName = sanitizeHtml(sanitise(name))
   const safeEmail = sanitizeHtml(sanitise(email))
   const safeMessage = sanitizeHtml(message)
   const safeService = sanitizeHtml(service)
 
+  // the test request tests the rate limiter
+  const isTestRequest = req.headers.get("x-test-mode") === "true"
+
+  if (!isTestRequest) {
     await resend.emails.send({
       from: safeName + " <onboarding@resend.dev>", 
       to: process.env.RECIPIENT_EMAIL!,
@@ -47,7 +57,8 @@ export async function POST(req: NextRequest) {
         <p><strong>Message:</strong></p>
         <p>${safeMessage}</p>
       `,
-    });
+    })
+  }
 
     return NextResponse.json(
       { message: "Email sent successfully." }, 

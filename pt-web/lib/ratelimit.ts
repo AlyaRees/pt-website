@@ -7,3 +7,5 @@ export const ratelimit = new Ratelimit({
   limiter: Ratelimit.slidingWindow(10, "1 h"), // 10 requests per hour
   analytics: true, // lets you see usage in the Upstash dashboard
 });
+
+// Ensure the rate limit is 10 requests every hour!!
