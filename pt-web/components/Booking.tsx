@@ -14,6 +14,7 @@ import { Calendar, Mail, Phone, MapPin } from "lucide-react";
 import { Button } from "./ui/Button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/Select"
 import { Label } from "./ui/Label"
+import { isValidEmail } from "../app/api/contact/securityFunctions";
 
 export function Booking() {
   const [formData, setFormData] = useState({
@@ -158,9 +159,13 @@ export function Booking() {
                       maxLength={254}
                       placeholder="you@example.com"
                       value={formData.email}
-                      onChange={(e) =>
+                      onChange={(e) => {
+                        if (!isValidEmail(e.target.value)) {
+                          setStatus('error')
+                          return
+                        }
                         setFormData({ ...formData, email: e.target.value })
-                      }
+                      }}
                       required
                     />
                   </div>

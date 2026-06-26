@@ -3,3 +3,8 @@ export function sanitise(email :string) {
     .replace(/[^\x20-\x7E]/g, "") // strip non-printable ASCII
     .trim()
 }
+
+export function isValidEmail(email :string) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email)
+}
