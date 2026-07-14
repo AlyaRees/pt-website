@@ -1,10 +1,11 @@
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "./ui/Button"
+import Image from "next/image"
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center pt-8 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,oklch(0.88_0.18_95/0.15),transparent_50%)]" />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
@@ -53,12 +54,18 @@ export function Hero() {
           </div>
 
           <div className="relative">
-            <div className="aspect-[4/5] rounded-lg bg-secondary overflow-hidden relative">
+            <div className="aspect-[1/1] rounded-lg bg-secondary overflow-hidden relative">
               <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-32 h-32 rounded-full bg-primary/20 flex items-center justify-center">
                   <div className="w-24 h-24 rounded-full bg-primary/30 flex items-center justify-center">
                     <div className="w-16 h-16 rounded-full bg-primary" />
+                  <Image
+                  src="/image.png"
+                  fill={true}
+                  alt=""
+                  priority
+                  ></Image>
                   </div>
                 </div>
               </div>
