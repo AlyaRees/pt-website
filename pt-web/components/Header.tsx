@@ -3,7 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { Menu, X, Dumbbell } from "lucide-react"
-import Button from "./ui/Button"
+import { Button } from "../components/ui/Button"
 
 const navLinks = [
   { href: "#about", label: "About" },
@@ -24,7 +24,7 @@ export function Header() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           <Link href="/" className="flex items-center gap-2">
             <Dumbbell className="h-8 w-8 text-primary" />
-            <span className="text-xl font-bold tracking-tight">ALEX CARTER</span>
+            <span className="text-xl font-bold tracking-tight">Anton Archer</span>
           </Link>
 
           <nav className="hidden lg:flex items-center gap-8">
@@ -40,9 +40,9 @@ export function Header() {
           </nav>
 
           <div className="hidden lg:block">
-            <button>
+            <Button>
               <Link href="#booking">Book Now</Link>
-            </button>
+            </Button>
           </div>
 
           <button

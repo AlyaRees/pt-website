@@ -53,7 +53,7 @@ export function Booking() {
   };
 
   return (
-    <section id="contact" className="py-20 lg:py-32">
+    <section id="contact" className="py-20 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16">
           <div className="space-y-8">
@@ -116,8 +116,7 @@ export function Booking() {
                 <div>
                   <h3 className="font-semibold mb-1">Location</h3>
                   <p className="text-sm text-muted-foreground">
-                    FitPro Gym, 123 Fitness Ave
-                    <br />
+                    FitPro Gym, 123 Fitness Ave       
                     Los Angeles, CA 90001
                   </p>
                 </div>

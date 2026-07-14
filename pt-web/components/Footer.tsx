@@ -32,7 +32,7 @@ const socialLinks = [
 export function Footer() {
   return (
     <footer className="bg-card border-t border-border">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-10">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
           <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
@@ -106,12 +106,12 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-border mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="border-t border-border mt-10 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Alex Carter Fitness. All rights reserved.
+            &copy; {new Date().getFullYear()} Anton Archer Fitness. All rights reserved.
           </p>
           <p className="text-sm text-muted-foreground">
-            Designed with dedication for your fitness journey.
+            Designed by BitwiseAlchemy.
           </p>
         </div>
       </div>

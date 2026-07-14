@@ -56,7 +56,7 @@ const packages = [
 
 export function Packages() {
   return (
-    <section id="packages" className="py-20 lg:py-32">
+    <section id="packages" className="py-20 lg:py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <p className="text-primary font-semibold tracking-wider uppercase text-sm mb-2">
@@ -73,7 +73,7 @@ export function Packages() {
 
         <div className="grid md:grid-cols-3 gap-8">
           {packages.map((pkg) => (
-            <Card key={pkg.name} className="bg-card border-border hover:border-primary/50 transition-colors relative overflow-hidden">
+            <Card key={pkg.name} className="flex flex-col items-center bg-card border-border hover:border-primary/50 transition-colors overflow-hidden">
               <div className="absolute top-4 right-4">
                 <span className="bg-primary/10 text-primary text-xs font-semibold px-2 py-1 rounded">
                   {pkg.savings}
@@ -100,8 +100,8 @@ export function Packages() {
                   ))}
                 </ul>
               </CardContent>
-              <CardFooter>
-                <Button asChild className="w-full group">
+              <CardFooter className="bg-white">
+                <Button asChild className="flex mt-auto">
                   <Link href="#booking">
                     Purchase Package
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
