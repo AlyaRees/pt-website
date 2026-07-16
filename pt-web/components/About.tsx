@@ -25,8 +25,8 @@ const highlights = [
 
 export function About() {
   return (
-    <section id="about" className="py-20 lg:py-20 bg-card">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="about" className="py-20 bg-card">
+      <div className="max-w-7xl mx-auto px-4 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="space-y-6">
             <div>
