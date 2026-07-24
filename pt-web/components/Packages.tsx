@@ -73,14 +73,9 @@ export function Packages() {
 
         <div className="grid md:grid-cols-3 gap-8">
           {packages.map((pkg) => (
-            <Card key={pkg.name} className="flex flex-col items-center bg-card border-border hover:border-primary/50 transition-colors overflow-hidden">
-              <div className="absolute top-4 right-4">
-                <span className="bg-primary/10 text-primary text-xs font-semibold px-2 py-1 rounded">
-                  {pkg.savings}
-                </span>
-              </div>
+            <Card key={pkg.name} className="flex flex-col border-border hover:border-primary/50 transition-colors overflow-hidden">
               <CardHeader>
-                <div className="h-14 w-14 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+                <div className="flex justify-center items-center h-14 w-14 rounded-lg bg-primary/10 flex mb-4">
                   <pkg.icon className="h-7 w-7 text-primary" />
                 </div>
                 <CardTitle className="text-2xl">{pkg.name}</CardTitle>
@@ -90,6 +85,7 @@ export function Packages() {
                 <CardDescription className="mt-2">{pkg.description}</CardDescription>
               </CardHeader>
               <CardContent>
+                <div className="flex flex-col h-70">
                 <p className="text-sm font-semibold mb-3 text-foreground">Includes:</p>
                 <ul className="space-y-2">
                   {pkg.includes.map((item) => (
@@ -99,8 +95,9 @@ export function Packages() {
                     </li>
                   ))}
                 </ul>
+                </div>
               </CardContent>
-              <CardFooter className="bg-white">
+              <CardFooter className="flex items-center justify-center">
                 <Button asChild className="flex mt-auto">
                   <Link href="#booking">
                     Purchase Package
