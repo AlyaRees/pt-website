@@ -37,7 +37,7 @@ export function Footer() {
           <div className="sm:col-span-2 lg:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-4">
               <Dumbbell className="h-8 w-8 text-primary" />
-              <span className="text-xl font-bold tracking-tight">ALEX CARTER</span>
+              <span className="text-xl font-bold tracking-tight">Anton Archer</span>
             </Link>
             <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
               Transforming lives through personalized fitness coaching. 

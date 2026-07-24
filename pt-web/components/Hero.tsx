@@ -8,7 +8,7 @@ export function Hero() {
     <section className="relative min-h-screen flex items-center justify-center lg:pt-8 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,oklch(0.88_0.18_95/0.15),transparent_50%)]" />
       
-      <div className="max-w-7xl mx-auto px-8 sm:px-6 lg:px-8 py-20 lg:py-32">
+      <div className="mx-auto px-8 sm:px-6 lg:px-8 py-20 lg:py-32">
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           <div className="space-y-8">
             <div className="space-y-4">
