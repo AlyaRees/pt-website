@@ -191,3 +191,10 @@ describe("Testing the POST api", () => {
     })
   })
 })
+
+/*
+
+  Write a test that validates email addresses by trying to send emails to them.
+  Perhaps by seeing the API response from send an email to an address?
+
+*/
