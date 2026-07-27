@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server"
 import { ratelimit } from "../../../lib/ratelimit"
 import { Resend } from "resend"
 import sanitizeHtml from "sanitize-html"
-import { isValidEmail, sanitise as sanitise } from "./securityFunctions"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -28,15 +27,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  if (!isValidEmail(email)) {
-    return NextResponse.json(
-      { error: "Invalid email address."},
-      { status: 400 }
-    )
-  }
   // strips all html
-  const safeName = sanitizeHtml(sanitise(name))
-  const safeEmail = sanitizeHtml(sanitise(email))
+  const safeName = sanitizeHtml(name)
+  const safeEmail = sanitizeHtml(email)
   const safeMessage = sanitizeHtml(message)
   const safeService = sanitizeHtml(service)
 
