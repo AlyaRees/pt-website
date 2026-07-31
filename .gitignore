@@ -49,3 +49,5 @@ node_modules/
 /playwright/.auth/
 
 dev/cache/
+
+.DS_Store
