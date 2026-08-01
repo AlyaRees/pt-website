@@ -56,19 +56,13 @@ export function Hero() {
           <div className="relative">
             <div className="aspect-[1/1] rounded-lg bg-secondary overflow-hidden relative">
               <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="w-32 h-32 rounded-full bg-primary/20 flex items-center justify-center">
-                  <div className="w-24 h-24 rounded-full bg-primary/30 flex items-center justify-center">
-                    <div className="w-16 h-16 rounded-full bg-primary relative"/>
                   <Image
                   src="/image.png"
-                  fill={true}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   alt="image of personal trainer"
                   priority
                   ></Image>
-                  </div>
-                </div>
-              </div>
               <div className="absolute bottom-6 left-6 right-6 bg-card/90 backdrop-blur-sm rounded-lg p-4 border border-border">
                 <p className="font-semibold">Next Available Session</p>
                 <p className="text-sm text-muted-foreground">Tomorrow, 9:00 AM</p>
