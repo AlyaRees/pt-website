@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { ratelimit } from "../../../lib/ratelimit"
 import { Resend } from "resend"
-import sanitizeHtml from "sanitize-html"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -27,28 +26,22 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // strips all html
-  const safeName = sanitizeHtml(name)
-  const safeEmail = sanitizeHtml(email)
-  const safeMessage = sanitizeHtml(message)
-  const safeService = sanitizeHtml(service)
-
   // the test request tests the rate limiter
   const isTestRequest = req.headers.get("x-test-mode") === "true"
 
   if (!isTestRequest) {
     await resend.emails.send({
-      from: safeName + " <onboarding@resend.dev>", 
+      from: "Name <contact@clientdomain.com>", 
       to: process.env.RECIPIENT_EMAIL!,
-      replyTo: safeEmail,
-      subject: `New message from ${safeName}`,
+      replyTo: email,
+      subject: `New booking request from ${name}`,
       html: `
         <h2>New Contact Form Submission</h2>
-        <p><strong>Interested in:</strong> ${safeService}</p>
-        <p><strong>Name:</strong> ${safeName}</p>
-        <p><strong>Email:</strong> ${safeEmail}</p>
+        <p><strong>Interested in:</strong> ${service}</p>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
         <p><strong>Message:</strong></p>
-        <p>${safeMessage}</p>
+        <p>${message}</p>
       `,
     })
   }

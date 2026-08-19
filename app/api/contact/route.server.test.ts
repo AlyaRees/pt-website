@@ -44,9 +44,9 @@ describe("Testing the POST api", () => {
       request({
         name: "TestUser",
         email: "testuser@test.com",
-        phone: "09876543235",
+        phone: "+15555555555",
         message: "hi there.",
-        service: "-"
+        service: "helo"
       }),
     );
 
