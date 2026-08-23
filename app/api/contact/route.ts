@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { ratelimit } from "../../../lib/ratelimit"
 import { Resend } from "resend"
+import { stripField } from "./validation/securityFunctions"
 
 const resend = new Resend(process.env.RESEND_API_KEY)
 
@@ -19,7 +20,9 @@ export async function POST(req: NextRequest) {
   try {
   const { name, email, phone, message, service } = await req.json()
 
-  if (!name || !email || !message || !phone || !service) {
+  const strippedName = stripField(name)
+
+  if (!strippedName || !email || !message || !phone || !service) {
     return NextResponse.json(
       { message: "All fields are required." },
       { status: 400 }
@@ -34,11 +37,11 @@ export async function POST(req: NextRequest) {
       from: "Name <contact@clientdomain.com>", 
       to: process.env.RECIPIENT_EMAIL!,
       replyTo: email,
-      subject: `New booking request from ${name}`,
+      subject: `New booking request from ${strippedName}`,
       html: `
         <h2>New Contact Form Submission</h2>
         <p><strong>Interested in:</strong> ${service}</p>
-        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Name:</strong> ${strippedName}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Message:</strong></p>
         <p>${message}</p>
