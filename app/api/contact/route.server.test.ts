@@ -44,9 +44,9 @@ describe("Testing the POST api", () => {
       request({
         name: "TestUser",
         email: "testuser@test.com",
-        phone: "+15555555555",
+        phone: "07898986543",
         message: "hi there.",
-        service: "helo"
+        service: "hello"
       }),
     );
 
@@ -54,7 +54,7 @@ describe("Testing the POST api", () => {
 
     expect(response.status).toBe(200);
     expect(resolvedResponse.message).toBe("Email sent successfully.");
-  });
+  })
 
   it("should return 400 when submitting an empty name field", async () => {
     const response = await POST(

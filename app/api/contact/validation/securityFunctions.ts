@@ -6,5 +6,5 @@ export function stripField(fieldInput :string) {
       whiteList: {},
       stripIgnoreTag: true
     }
-  )
+  ).trim()
 }
