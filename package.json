@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "test": "jest",
-    "lint": "eslint"
+    "lint": "eslint",
+    "pw" : "npx playwright test"
   },
   "dependencies": {
     "@upstash/ratelimit": "^2.0.8",
