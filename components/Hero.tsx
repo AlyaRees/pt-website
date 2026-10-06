@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowRight } from "lucide-react"
 import { Button } from "./ui/Button"
 import Image from "next/image"
+import { NavLink } from "./NavLink"
 
 export function Hero() {
   return (
@@ -25,13 +26,13 @@ export function Hero() {
 
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" asChild className="text-base">
-                <Link href="#booking">
+                <NavLink sectionId="booking">
                   Start Your Journey
                   <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
+                </NavLink>
               </Button>
               <Button size="lg" variant="outline" className="text-base">
-                <Link href="#services">View Services</Link>
+                <NavLink sectionId="services">View Services</NavLink>
               </Button>
             </div>
 

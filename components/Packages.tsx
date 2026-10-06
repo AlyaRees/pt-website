@@ -1,6 +1,6 @@
 import { ArrowRight, Flame, Trophy, Rocket } from "lucide-react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "./ui/Card"
-import Link from "next/link"
+import { NavLink } from "./NavLink"
 import { Button } from "./ui/Button"
 
 const packages = [
@@ -99,10 +99,10 @@ export function Packages() {
               </CardContent>
               <CardFooter className="flex items-center justify-center">
                 <Button asChild className="flex mt-auto">
-                  <Link href="#booking">
+                  <NavLink sectionId="#booking">
                     Purchase Package
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                  </NavLink>
                 </Button>
               </CardFooter>
             </Card>
