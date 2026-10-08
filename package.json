@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "env -u UPSTASH_REDIS_REST_URL -u UPSTASH_REDIS_REST_TOKEN next dev",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
     "test": "jest",
