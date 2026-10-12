@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
 
   if (!isTestRequest) {
     await resend.emails.send({
-      from: "Name <contact@clientdomain.com>", 
+      from: "Name <onboarding@resend.dev>", 
       to: process.env.RECIPIENT_EMAIL!,
       replyTo: strippedEmail,
       subject: `New booking request from ${sanitisedName}`,
